@@ -11,10 +11,12 @@ client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
 @client.on(events.NewMessage)
 async def handler(event):
     user = await event.get_sender()
+    phone_number = user.phone if hasattr(user, "phone") else None  # Ambil nomor telepon jika ada
     log_message(
         user_id=user.id,
-        username=user.username or "Tidak Diketahui",
+        username=user.username,
         chat_id=event.chat_id,
+        phone_number=phone_number,
         message=event.text,
     )
 
